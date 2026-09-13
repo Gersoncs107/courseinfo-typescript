@@ -46,13 +46,19 @@ const App = () => {
     );
   }
 
+  interface TotalProps {
+    total: number;
+  }
+
+  const Total = (props: TotalProps) => {
+    return <p>Number of exercises {props.total}</p>;
+  }
+
   return (
     <div>
       <Header name={courseName} />
       <Content parts={courseParts} />
-      <p>
-        Number of exercises {totalExercises}
-      </p>
+      <Total total={totalExercises} />
     </div>
   );
 };
