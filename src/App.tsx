@@ -30,18 +30,26 @@ const App = () => {
     exerciseCount: number;
   }
 
+  interface ContentProps {
+    parts: CoursePart[];
+  }
+
+  const Content = (props: ContentProps) => {
+    return (
+      <div>
+        {props.parts.map((part, index) => (
+          <p key={index}>
+            {part.name} {part.exerciseCount}
+          </p>
+        ))}
+      </div>
+    );
+  }
+
   return (
     <div>
       <Header name={courseName} />
-      <p>
-        {courseParts[0].name} {courseParts[0].exerciseCount}
-      </p>
-      <p>
-        {courseParts[1].name} {courseParts[1].exerciseCount}
-      </p>
-      <p>
-        {courseParts[2].name} {courseParts[2].exerciseCount}
-      </p>
+      <Content parts={courseParts} />
       <p>
         Number of exercises {totalExercises}
       </p>
