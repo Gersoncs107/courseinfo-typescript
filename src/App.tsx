@@ -25,6 +25,11 @@ const App = () => {
     return <h1>{props.name}</h1>;
   }
 
+  interface CoursePart {
+    name: string;
+    exerciseCount: number;
+  }
+
   return (
     <div>
       <Header name={courseName} />
