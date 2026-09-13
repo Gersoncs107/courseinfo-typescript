@@ -17,8 +17,8 @@ const App = () => {
 
   const totalExercises = courseParts.reduce((sum, part) => sum + part.exerciseCount, 0);
 
-  const Header = props => {
-    return <h1>{props.courseName}</h1>;
+  interface Header {
+    name: string;
   }
 
   return (
