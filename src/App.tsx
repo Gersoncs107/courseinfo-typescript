@@ -25,11 +25,6 @@ const App = () => {
     return <h1>{props.name}</h1>;
   }
 
-  interface CoursePart {
-    name: string;
-    exerciseCount: number;
-  }
-
   interface ContentProps {
     parts: CoursePart[];
   }
@@ -55,6 +50,8 @@ interface CoursePartBackground {
   backgroundMaterial: string;
   kind: "background"
 }
+
+type CoursePart = CoursePartBasic | CoursePartGroup | CoursePartBackground;
 
   const Content = (props: ContentProps) => {
     return (
