@@ -51,32 +51,32 @@ const App = () => {
     return <h1>{props.name}</h1>;
   }
 
-interface ContentProps {
-    parts: CoursePart[];
+  interface ContentProps {
+      parts: CoursePart[];
+    }
+    
+  interface CoursePartBase {
+    name: string;
+    exerciseCount: number;
   }
-  
-interface CoursePartBase {
-  name: string;
-  exerciseCount: number;
-}
 
-interface CoursePartBasic extends CoursePartBase {
-  description: string;
-  kind: "basic"
-}
+  interface CoursePartBasic extends CoursePartBase {
+    description: string;
+    kind: "basic"
+  }
 
-interface CoursePartGroup extends CoursePartBase {
-  groupProjectCount: number;
-  kind: "group"
-}
+  interface CoursePartGroup extends CoursePartBase {
+    groupProjectCount: number;
+    kind: "group"
+  }
 
-interface CoursePartBackground extends CoursePartBase {
-  description: string;
-  backgroundMaterial: string;
-  kind: "background"
-}
+  interface CoursePartBackground extends CoursePartBase {
+    description: string;
+    backgroundMaterial: string;
+    kind: "background"
+  }
 
-type CoursePart = CoursePartBasic | CoursePartGroup | CoursePartBackground;
+  type CoursePart = CoursePartBasic | CoursePartGroup | CoursePartBackground;
 
   const Content = (props: ContentProps) => {
     return (
