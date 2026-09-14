@@ -34,6 +34,28 @@ const App = () => {
     parts: CoursePart[];
   }
 
+  interface CoursePartBasic {
+  name: string;
+  exerciseCount: number;
+  description: string;
+  kind: "basic"
+}
+
+interface CoursePartGroup {
+  name: string;
+  exerciseCount: number;
+  groupProjectCount: number;
+  kind: "group"
+}
+
+interface CoursePartBackground {
+  name: string;
+  exerciseCount: number;
+  description: string;
+  backgroundMaterial: string;
+  kind: "background"
+}
+
   const Content = (props: ContentProps) => {
     return (
       <div>
