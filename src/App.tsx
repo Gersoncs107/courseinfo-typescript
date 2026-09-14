@@ -61,7 +61,7 @@ const App = () => {
   }
 
   interface CoursePartBasic extends CoursePartBase {
-    description: string;
+    description: DescriptionProps["description"];
     kind: "basic"
   }
 
@@ -71,7 +71,7 @@ const App = () => {
   }
 
   interface CoursePartBackground extends CoursePartBase {
-    description: string;
+    description: DescriptionProps["description"];
     backgroundMaterial: string;
     kind: "background"
   }
