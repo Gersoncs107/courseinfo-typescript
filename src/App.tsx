@@ -43,9 +43,10 @@ const App = () => {
     return <h1>{props.name}</h1>;
   }
 
-  interface ContentProps {
+interface ContentProps {
     parts: CoursePart[];
   }
+  
 interface CoursePartBase {
   name: string;
   exerciseCount: number;
