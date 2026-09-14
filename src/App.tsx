@@ -42,6 +42,11 @@ const App = () => {
     return <h1>{props.name}</h1>;
   }
 
+  interface CoursePartBase {
+    name: string;
+    exerciseCount: number;
+  }
+
   interface ContentProps {
     parts: CoursePart[];
   }
