@@ -26,6 +26,11 @@ const App = () => {
       backgroundMaterial: "https://type-level-typescript.com/template-literal-types",
       kind: "background"
     },
+    // {
+    //   name: "TypeScript in frontend",
+    //   exerciseCount: 10,
+    //   kind: "basic",
+    // },
   ]
   const totalExercises = courseParts.reduce((sum, part) => sum + part.exerciseCount, 0);
 
