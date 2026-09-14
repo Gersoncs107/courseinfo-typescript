@@ -35,7 +35,7 @@ const App = () => {
 ];
   const totalExercises = courseParts.reduce((sum, part) => sum + part.exerciseCount, 0);
 
-  interface DescriptionProps {
+  interface DescriptionProps extends CoursePartBasic {
     description: string;
   }
 
