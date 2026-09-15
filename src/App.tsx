@@ -24,7 +24,6 @@ const App = () => {
     kind: "background";
   }
 
-  // Nova interface pedida no final do exercício
   interface CoursePartSpecial extends CoursePartWithDescription {
     requirements: string[];
     kind: "special";
