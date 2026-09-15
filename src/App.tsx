@@ -1,47 +1,88 @@
 const App = () => {
   const courseName = "Half Stack application development";
-  const courseParts: CoursePart[] = [
-  {
-    name: "Fundamentals",
-    exerciseCount: 10,
-    description: "This is an awesome course part",
-    kind: "basic"
-  },
-  {
-    name: "Using props to pass data",
-    exerciseCount: 7,
-    groupProjectCount: 3,
-    kind: "group"
-  },
-  {
-    name: "Basics of type Narrowing",
-    exerciseCount: 7,
-    description: "How to go from unknown to string",
-    kind: "basic"
-  },
-  {
-    name: "Deeper type usage",
-    exerciseCount: 14,
-    description: "Confusing description",
-    backgroundMaterial: "https://type-level-typescript.com/template-literal-types",
-    kind: "background"
-  },
-  {
-    name: "TypeScript in frontend",
-    exerciseCount: 10,
-    description: "a hard part",
-    kind: "basic",
-  },
-];
-  const totalExercises = courseParts.reduce((sum, part) => sum + part.exerciseCount, 0);
 
-  interface DescriptionProps extends CoursePartBasic {
+  interface CoursePartBase {
+    name: string;
+    exerciseCount: number;
+  }
+
+  // Nova interface: junta description + CoursePartBase
+  interface CoursePartWithDescription extends CoursePartBase {
     description: string;
   }
 
-  const Description = (props: DescriptionProps) => {
-    return <p>{props.description}</p>;
+  interface CoursePartBasic extends CoursePartWithDescription {
+    kind: "basic";
   }
+
+  interface CoursePartGroup extends CoursePartBase {
+    groupProjectCount: number;
+    kind: "group";
+  }
+
+  interface CoursePartBackground extends CoursePartWithDescription {
+    backgroundMaterial: string;
+    kind: "background";
+  }
+
+  // Nova interface pedida no final do exercício
+  interface CoursePartSpecial extends CoursePartWithDescription {
+    requirements: string[];
+    kind: "special";
+  }
+
+  type CoursePart =
+    | CoursePartBasic
+    | CoursePartGroup
+    | CoursePartBackground
+    | CoursePartSpecial;
+
+  const courseParts: CoursePart[] = [
+    {
+      name: "Fundamentals",
+      exerciseCount: 10,
+      description: "This is an awesome course part",
+      kind: "basic",
+    },
+    {
+      name: "Using props to pass data",
+      exerciseCount: 7,
+      groupProjectCount: 3,
+      kind: "group",
+    },
+    {
+      name: "Basics of type Narrowing",
+      exerciseCount: 7,
+      description: "How to go from unknown to string",
+      kind: "basic",
+    },
+    {
+      name: "Deeper type usage",
+      exerciseCount: 14,
+      description: "Confusing description",
+      backgroundMaterial:
+        "https://type-level-typescript.com/template-literal-types",
+      kind: "background",
+    },
+    {
+      name: "TypeScript in frontend",
+      exerciseCount: 10,
+      description: "a hard part",
+      kind: "basic",
+    },
+    {
+      name: "Backend development",
+      exerciseCount: 21,
+      description: "Typing the backend",
+      requirements: ["nodejs", "jest"],
+      kind: "special",
+    },
+  ];
+
+  const totalExercises = courseParts.reduce(
+    (sum, part) => sum + part.exerciseCount,
+    0
+  );
 
   interface HeaderProps {
     name: string;
@@ -49,46 +90,87 @@ const App = () => {
 
   const Header = (props: HeaderProps) => {
     return <h1>{props.name}</h1>;
+  };
+
+  // Função auxiliar para garantir checagem exaustiva no switch
+  const assertNever = (value: never): never => {
+    throw new Error(
+      `Unhandled discriminated union member: ${JSON.stringify(value)}`
+    );
+  };
+
+  interface PartProps {
+    part: CoursePart;
   }
+
+  const Part = (props: PartProps) => {
+    const part = props.part;
+
+    switch (part.kind) {
+      case "basic":
+        return (
+          <div>
+            <p>
+              <b>
+                {part.name} {part.exerciseCount}
+              </b>
+            </p>
+            <p>{part.description}</p>
+          </div>
+        );
+      case "group":
+        return (
+          <div>
+            <p>
+              <b>
+                {part.name} {part.exerciseCount}
+              </b>
+            </p>
+            <p>project exercises {part.groupProjectCount}</p>
+          </div>
+        );
+      case "background":
+        return (
+          <div>
+            <p>
+              <b>
+                {part.name} {part.exerciseCount}
+              </b>
+            </p>
+            <p>{part.description}</p>
+            <p>submit to {part.backgroundMaterial}</p>
+          </div>
+        );
+      case "special":
+        return (
+          <div>
+            <p>
+              <b>
+                {part.name} {part.exerciseCount}
+              </b>
+            </p>
+            <p>{part.description}</p>
+            <p>required skills: {part.requirements.join(", ")}</p>
+          </div>
+        );
+      default:
+        return assertNever(part);
+    }
+  };
 
   interface ContentProps {
-      parts: CoursePart[];
-    }
-    
-  interface CoursePartBase {
-    name: string;
-    exerciseCount: number;
+    parts: CoursePart[];
   }
-
-  interface CoursePartBasic extends CoursePartBase {
-    description: DescriptionProps["description"];
-    kind: "basic"
-  }
-
-  interface CoursePartGroup extends CoursePartBase {
-    groupProjectCount: number;
-    kind: "group"
-  }
-
-  interface CoursePartBackground extends CoursePartBase {
-    description: DescriptionProps["description"];
-    backgroundMaterial: string;
-    kind: "background"
-  }
-
-  type CoursePart = CoursePartBasic | CoursePartGroup | CoursePartBackground;
 
   const Content = (props: ContentProps) => {
     return (
       <div>
-        {props.parts.map((part, index) => (
-          <p key={index}>
-            {part.name} {part.exerciseCount}
-          </p>
+        {props.parts.map((part) => (
+          <Part key={part.name} part={part} />
         ))}
       </div>
     );
-  }
+  };
 
   interface TotalProps {
     total: number;
@@ -96,9 +178,7 @@ const App = () => {
 
   const Total = (props: TotalProps) => {
     return <p>Number of exercises {props.total}</p>;
-  }
-
-  
+  };
 
   return (
     <div>
