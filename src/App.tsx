@@ -6,7 +6,6 @@ const App = () => {
     exerciseCount: number;
   }
 
-  // Nova interface: junta description + CoursePartBase
   interface CoursePartWithDescription extends CoursePartBase {
     description: string;
   }
