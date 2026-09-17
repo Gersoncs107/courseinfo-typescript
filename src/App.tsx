@@ -90,7 +90,6 @@ const App = () => {
     return <h1>{props.name}</h1>;
   };
 
-  // Função auxiliar para garantir checagem exaustiva no switch
   const assertNever = (value: never): never => {
     throw new Error(
       `Unhandled discriminated union member: ${JSON.stringify(value)}`
